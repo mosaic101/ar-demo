@@ -1,0 +1,45 @@
+{
+  "name": "ar-demo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=dev DEBUG='app:*' node_modules/.bin/nodemon src/bin/www",
+    "ci": "npm run lint && npm run cov",
+    "alinode": "ENABLE_NODE_LOG=YES NODE_ENV=test DEBUG='app:*' node_modules/.bin/nodemon src/bin/www",
+    "unit": "npm run mocha"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/wisnuc/ar-demo.git",
+  "author": "Jianjin Wu <mosaic101@foxmail.com>",
+  "license": "MIT",
+  "merge_logs": true,
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.3",
+    "getconfig": "^3.1.0",
+    "joi": "^10.4.2",
+    "jwt-simple": "^0.5.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^5.0.12",
+    "mqtt": "^2.14.0",
+    "session-file-store": "^1.1.2",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "autocannon": "^0.16.5",
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.14.1",
+    "sinon": "^2.3.8",
+    "supertest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  }
+}

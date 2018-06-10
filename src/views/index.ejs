@@ -1,0 +1,119 @@
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <title>ar-demo</title>
+  <style>
+    body {
+      position: fixed;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      display: inline;
+      z-index: 999;
+    }
+  </style>
+  <script src="//wow.techbrood.com/libs/three.r73.js"></script>
+</head>
+
+<body>
+  
+    <video id="video" autoplay controls="true">
+        <canvas id="canvas" width="480" height="320">
+      
+          </canvas>
+    </video>
+  
+  <button id="capture" style="width: 100px; height: 100px;">录像</button>
+  <script>
+
+    var video = document.getElementById("video");
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    video.addEventListener("play", function() {
+      // video.width = video.videoWidth / 2;
+      // self.height = video.videoHeight / 2;
+      // self.timerCallback();
+      
+    }, false);
+
+    function getUserMedia(constrains, success, error) {
+      if (navigator.mediaDevices.getUserMedia) {
+        // 最新标准API
+        navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+      } else if (navigator.webkitGetUserMedia) {
+        // webkit 内核浏览器
+        navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+      } else if (navigator.mozGetUserMedia) {
+        // Firefox 浏览器
+        navagator.mozGetUserMedia(constrains).then(success).catch(error);
+      } else if (navigator.getUserMedia) {
+        // 旧版API
+        navigator.getUserMedia(constrains).then(success).catch(error);
+      }
+    }
+
+    function success(stream) {
+      // webkit
+      var CompatibleURL = window.URL || window.webkitURL;
+      video.src = CompatibleURL.createObjectURL(stream);
+      video.play();
+    }
+
+    function error(error) {
+      alert(error.message)
+    }
+    if (navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.mediaDevices.getUserMedia
+    ) {
+      var constrains = {
+        audio: true,
+        video: {
+          width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 776, ideal: 720, max: 1080 }
+        }
+      }
+      getUserMedia(constrains, success, error);
+    } else {
+      alert('getUserMedia() is not supported in your browser')
+    }
+    
+    ctx.fillStyle="yellow";  
+    ctx.strokeStyle="yellow";  
+    var centerX=100;  
+    var centerY=100;  
+    var radius=50;  
+    var startAngle=0;  
+    var endAngle=2*Math.PI;  
+    //保存当前的绘图状态  
+    ctx.save();  
+    ctx.setTransform(1,0,-0.5,1,100,0);  
+    //开始绘图路径;  
+    ctx.beginPath();  
+    ctx.arc(centerX,centerY,radius,startAngle,endAngle,false);  
+    ctx.strokeStyle="white";  
+    ctx.stroke();  
+    ctx.fillStyle="rgba(0,0,0,0.2)";  
+    ctx.fill();  
+    //填充样式和填充完毕;  
+    ctx.restore();  
+    ctx.beginPath();  
+    ctx.arc(centerX,centerY,radius,startAngle,endAngle,false);  
+    ctx.stroke();  
+    ctx.fill();  
+
+    // 注册拍照按钮的单击事件
+    document.getElementById("capture").addEventListener("click", function () {
+      // 绘制画面
+      ctx.drawImage(video, 0, 0, 480, 320);
+    });
+  </script>
+
+</body>
+
+</html>
